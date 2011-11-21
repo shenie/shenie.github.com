@@ -20,7 +20,7 @@ categories:
 
 <div>So I downloaded <a href="http://www.imagemagick.org/download/delegates/jpegsrc.v7.tar.gz">jpegsrc.v7.tar.gz</a> and just run thru the standard configure, make &amp; make install then reinstalled ImageMagick.</div>
 
-<div>After the installation you should be able to see JPEG as one of the supported format via the command &#8221;identify -list format&#8221;.</div>
+<div>After the installation you should be able to see JPEG as one of the supported format via the command "identify -list format".</div>
 
 <div>It should contain something like this.</div>
 

@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-<p>&#8220;<a href="http://www.zdnet.com.au/news/software/soa/ATO-avoids-open-source-due-to-security-concerns/0,130061733,339286850,00.htm">All software has bugs, no matter what the licence</a>&#8221;</p>
+<p>"<a href="http://www.zdnet.com.au/news/software/soa/ATO-avoids-open-source-due-to-security-concerns/0,130061733,339286850,00.htm">All software has bugs, no matter what the licence</a>"</p>
 
 <p>That reminded me how naive one of the developer I was in the meeting claiming that there are no bugs in their system. LOL.</p>
 
