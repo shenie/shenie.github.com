@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Sweet~~~"
+date: 2008-03-26 8:17
+comments: true
+categories: 
+---
+
+<a href="http://blog.segment7.net/articles/2007/01/18/rubygems-0-9-1">Sweet~~~</a><br/><p>Didn't know I got mentioned in that blog :)</p>

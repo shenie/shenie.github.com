@@ -1,0 +1,13 @@
+---
+layout: post
+title: "stikipad"
+date: 2008-05-29 2:51
+comments: true
+categories: 
+---
+
+<p>I like stikipad, but I am glad when I was deciding which wiki to use I didn't go with stikipad.</p>
+
+<p>They are currently down and, according to its users has been down for 2 weeks already. On top of the the owners and support is not there.</p>
+
+<p>I am current playing with porting my wiki pages to Google Site. My experience so far is that the UI is nice, displaying code is a bit of pain until I figure out a better way. Lastly it doesn't seem to be indexed by Google.</p>

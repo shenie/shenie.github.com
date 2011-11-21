@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Chat apps"
+date: 2007-05-20 23:25
+comments: true
+categories: 
+---
+
+<a href="http://mashable.com/2007/05/15/look-out-kevin-rose-19-im-startups-you-need-to-beat/">Chat apps</a><br/><p>Meebo blocked by your corporate firewall? Try the other 18 web chat apps.</p>

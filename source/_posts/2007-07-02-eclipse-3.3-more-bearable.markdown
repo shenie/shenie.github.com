@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Eclipse 3.3 more bearable"
+date: 2007-07-02 2:18
+comments: true
+categories: 
+---
+
+<img src="http://30.media.tumblr.com/4725001_500.jpg" alt=""/><br/><br/><p>hehe I decided to use Eclipse a bit more since the project at work is only setup for Eclipse and I can't be bothered to setup Intellij IDEA for every project here since we use ClearCase here and it's damn slow.</p><p>But with the latest Eclipse 3.3 release, it is getting a bit more bearable, both in terms of look &amp; feel and workflow </p>
