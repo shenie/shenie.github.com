@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Good day"
+date: 2007-11-14 5:46
+comments: true
+categories: 
+---
+
+<p>Had a good day after work today, we went out with baby daughter and her little bike. Ran around on a field near our home. It was good exercise and she slept nicely afterwards :) </p>

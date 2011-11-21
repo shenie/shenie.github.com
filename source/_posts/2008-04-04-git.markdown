@@ -1,0 +1,15 @@
+---
+layout: post
+title: "Git"
+date: 2008-04-04 6:26
+comments: true
+categories: 
+---
+
+<p>I actually looked to get started git a while ago. Even got myself a <a href="http://github.com/shenie">github repos</a> but I couldn't be bothered to install git back then.</p>
+
+<p>Fast forward to now, it is still not as easy as I would like but I can deal with it.</p>
+
+<p>The main reason I want to get git is to make it easier to stay on edge rails.</p>
+
+<p>I haven't felt that I really need distributed SCM. With no experiences with using DSCM I am not ruling it out. Just need to find time to get to try it out.</p>

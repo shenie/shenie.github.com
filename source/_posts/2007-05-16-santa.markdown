@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Santa"
+date: 2007-05-16 19:15
+comments: true
+categories: 
+---
+
+Fingers crossed Santa Rosa will be available on macs when Leopard is shipped.

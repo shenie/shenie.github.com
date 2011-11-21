@@ -1,0 +1,21 @@
+---
+layout: post
+title: "Gem which"
+date: 2008-04-11 15:47
+comments: true
+categories: 
+---
+
+<p>I recently installed rb-appscript gem, which is way cool and I wanted to have a look at its implementation.
+So I used my &#8216;pushdgem' shortcut which basically does a gem which <name> and extract the path of the gem. But to my surprise it said &#8216;Can't find rb-appscript'</name></p>
+
+<p>I knew for a fact that the gem was installed, because TextMate's RubyAMP (how this all started) depends on rb-appscript. But I double checked anyway running gem list rb-appscript which did contain the expected result.</p>
+
+<p>hum.. I was puzzled, doesn't matter I knew gems are installed (you can get it too via Gem.path) so I got to the rb-appscript gem in the end.</p>
+
+<p>During playing with rb-appscript, a new version of rubygems was released (version 1.1.1). After I installed the update I started wondering why gem list and gem which behaved differently on the same gem.</p>
+
+<p>Again my curiosity got me to have a look inside rubygems. With previously experience working with rubygems, it didn't take long to find my way around the place. It turns out gem which command is really searching for the file that you want to require in the $LOAD_PATH. e.g. when you say require &#8216;hpricot' gem which hpricot let you know exactly which file was loaded. Whereas gem list is based on the specs.</p>
+
+<p>The difference means you could have a file called foobar.rb nothing to do with any gems in one of the directory in $LOAD_PATH such as /Library/Ruby/Site and run gem which foobar and it will return /Library/Ruby/Site/foobar.rb.
+It's counterintuitive but I guess it is more important to know which file your program will load instead of finding out which directory the gem is installed.</p>

@@ -1,0 +1,9 @@
+---
+layout: post
+title: ":cry: JSR-308"
+date: 2008-05-15 9:05
+comments: true
+categories: 
+---
+
+<p>I am already not a fan of annotations and now <a href="http://www.infoq.com/news/2008/05/JSR-308">this</a>!?!? Fortunately (and also unfortunate) enterprise (man I hate that word) companies are slow to take up new things. The client I work for at the moment is still on Java 1.4.....</p>

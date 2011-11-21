@@ -1,0 +1,9 @@
+---
+layout: post
+title: "sqsh"
+date: 2007-05-16 5:38
+comments: true
+categories: 
+---
+
+<p>Without <a href="http://www.sqsh.org/">sqsh</a>, <a href="http://squirrel-sql.sourceforge.net/">SQuirrel SQL</a> is a pretty good alternative, especially with its code completion.</p>

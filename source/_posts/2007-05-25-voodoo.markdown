@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Voodoo~~~~"
+date: 2007-05-25 8:11
+comments: true
+categories: 
+---
+
+<a href="http://flyingmeat.com/">Voodoo~~~~</a><br/><p>I was told about VoodooPad during my search for the <a href="http://wiki.shenie.info/#%5B%5BThe%20search%20for%20the%20next%20wiki%5D%5D">next wiki</a>. It looks good but I wanted something that's on the net.</p>

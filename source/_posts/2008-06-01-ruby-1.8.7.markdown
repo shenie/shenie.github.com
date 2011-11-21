@@ -1,0 +1,17 @@
+---
+layout: post
+title: "Ruby 1.8.7"
+date: 2008-06-01 9:56
+comments: true
+categories: 
+---
+
+<p>I was in a update mood so I updated my system to use GWT 1.5.0 and ruby 1.8.7.</p>
+
+<p>After updated ruby I tried to figure out how to keep the old gems. My solution was to set the following env variables (similar result could be achieved with <a href="http://www.rubygems.org/read/chapter/11">.gemrc</a>).</p>
+
+<ul><li>export GEM_HOME=/Library/Ruby/Gems/1.8</li>
+<li>export GEM_PATH=/usr/lib/ruby/gems/1.8</li>
+</ul><p>But in the end I decided to revert back to ruby 1.8.6.... because I realised a problem that I worked around earlier is bigger than I thought. The problem was that hpricot 0.6 didn't load properly under 1.8.7. I was too focused on understanding how OS X setup ruby framework and replicating it in 1.8.7.</p>
+
+<p>All was not lost, <a href="http://aspn.activestate.com/ASPN/Mail/Message/ruby-talk/3636320">someone</a> has found the problem and fixed it. So once a new hpricot released then I should be able to re-apply what I learnt.</p>

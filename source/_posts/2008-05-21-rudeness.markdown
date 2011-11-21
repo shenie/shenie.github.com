@@ -1,0 +1,11 @@
+---
+layout: post
+title: "Rudeness"
+date: 2008-05-21 15:45
+comments: true
+categories: 
+---
+
+<p>One of the reason I like Ruby community is the friendliness.</p>
+
+<p>But a few comments on this <a href="http://tinyurl.com/6k6ekm">post</a> is not a demonstration of that friendliness. I am sure Dan totally gets the concepts and he wrote a followup <a href="http://tinyurl.com/5oj4me">post</a> about it. I am just interested to see if the idiotic comments come back.</p>

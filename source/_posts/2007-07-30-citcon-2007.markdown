@@ -1,0 +1,9 @@
+---
+layout: post
+title: "CITCON 2007"
+date: 2007-07-30 7:09
+comments: true
+categories: 
+---
+
+<p>After watching <a href="http://www.imdb.com/title/tt0384793/">Accepted</a> again (since Jackie hasn't seen it) after <a href="http://www.citconf.com/index.php">CITCON</a>. It suddenly dawned on me, the way they came up with the curriculum for South Harmon Institute of Technology (SHIT) is exactly the spirit of open space used in CITCON.</p>

@@ -1,0 +1,11 @@
+---
+layout: post
+title: "Git pager"
+date: 2008-05-21 14:42
+comments: true
+categories: 
+---
+
+<p>By default Git uses less as a pager. That is very cool because to look at logs you no longer have to pipe the output to less yourself.
+But something didn't work very well for me until I finally couldn't take it anymore. The problem was that for some reason my Git output in less is displaying weird chars that looks like ESC at beginning of lines.
+I found the culprit to be one of my env variable LESS=-i, which makes search in less case-insensitive. It's all good after it's taken out :)</p>
