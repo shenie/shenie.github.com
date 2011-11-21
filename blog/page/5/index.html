@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>boiling memoir</title>
+  <meta name="author" content="Andy Shen">
+
+  
+  <meta name="description" content="I recently installed rb-appscript gem, which is way cool and I wanted to have a look at its implementation.So I used my &#8216;pushdgem&#8217; shor...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://shenie.github.com/blog/page/5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="boiling memoir" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">boiling memoir</a></h1>
+  
+    <h2>journey of one man</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:shenie.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/11/gem-which/">Gem Which</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-11T15:47:00+10:00" pubdate  data-updated="true" >Apr 11<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently installed rb-appscript gem, which is way cool and I wanted to have a look at its implementation.
+So I used my &#8216;pushdgem&#8217; shortcut which basically does a gem which <name> and extract the path of the gem. But to my surprise it said &#8216;Can&#8217;t find rb-appscript&#8217;</name></p>
+
+
+
+
+<p>I knew for a fact that the gem was installed, because TextMate&#8217;s RubyAMP (how this all started) depends on rb-appscript. But I double checked anyway running gem list rb-appscript which did contain the expected result.</p>
+
+
+
+
+<p>hum.. I was puzzled, doesn&#8217;t matter I knew gems are installed (you can get it too via Gem.path) so I got to the rb-appscript gem in the end.</p>
+
+
+
+
+<p>During playing with rb-appscript, a new version of rubygems was released (version 1.1.1). After I installed the update I started wondering why gem list and gem which behaved differently on the same gem.</p>
+
+
+
+
+<p>Again my curiosity got me to have a look inside rubygems. With previously experience working with rubygems, it didn&#8217;t take long to find my way around the place. It turns out gem which command is really searching for the file that you want to require in the $LOAD_PATH. e.g. when you say require &#8216;hpricot&#8217; gem which hpricot let you know exactly which file was loaded. Whereas gem list is based on the specs.</p>
+
+
+
+
+<p>The difference means you could have a file called foobar.rb nothing to do with any gems in one of the directory in $LOAD_PATH such as /Library/Ruby/Site and run gem which foobar and it will return /Library/Ruby/Site/foobar.rb.
+It&#8217;s counterintuitive but I guess it is more important to know which file your program will load instead of finding out which directory the gem is installed.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/07/rubyforge-and-tpg/">RubyForge and TPG</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-07T08:57:00+10:00" pubdate  data-updated="true" >Apr 7<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A while ago, I was unable to login to RubyForge due to proxy issues. Thanks to <a href="http://tomcopeland.blogs.com/juniordeveloper/2008/01/rubyforge-and-t.html">Tom</a>, he fixed it so I could start publishing romey releases again :)</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/06/335i-coupe/">335i Coupe</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-06T06:28:00+10:00" pubdate  data-updated="true" >Apr 6<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve had a chance of thrashing one at Eastern Creek. Let me just say when I floored it on the main straight&#8230;. WOA~~~~ the acceleration sent me firmly to the seat.</p>
+
+
+
+
+<p>Very very nice car indeed.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/06/average-grocery-item-cost/">Average Grocery Item Cost</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-06T06:00:00+10:00" pubdate  data-updated="true" >Apr 6<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve discovered something interesting&#8230; on average each grocery item we get costs about $4.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/04/git/">Git</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-04T06:26:00+11:00" pubdate  data-updated="true" >Apr 4<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I actually looked to get started git a while ago. Even got myself a <a href="http://github.com/shenie">github repos</a> but I couldn&#8217;t be bothered to install git back then.</p>
+
+
+
+
+<p>Fast forward to now, it is still not as easy as I would like but I can deal with it.</p>
+
+
+
+
+<p>The main reason I want to get git is to make it easier to stay on edge rails.</p>
+
+
+
+
+<p>I haven&#8217;t felt that I really need distributed SCM. With no experiences with using DSCM I am not ruling it out. Just need to find time to get to try it out.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/03/i-think-its-time-for-me-to-learn/">I Think It&#8217;s Time for Me to Learn</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-04-03T09:37:00+11:00" pubdate  data-updated="true" >Apr 3<span>rd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><ul><li>git</li>
+<li>a functional language, probably Haskell. Pity uni taught Miranda for my year and switched to Haskell the next year</li>
+</ul></p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/03/30/pistonise-romey/">Pistonise Romey</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-30T08:11:00+11:00" pubdate  data-updated="true" >Mar 30<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://rubyforge.org/projects/romey">romey</a> nows run on edge rails.</p>
+
+
+
+
+<p>It started with me trying the <a href="http://agilewebdevelopment.com/plugins/scope_out">scope_out plugin</a> as suggested by <a href="http://railscasts.com/">Ryan Bate&#8217;s awesome railscasts</a>, <a href="http://railscasts.com/episodes/76">episode 76</a>. Then I read about <a href="http://ryandaigle.com/articles/2008/3/24/what-s-new-in-edge-rails-has-finder-functionality">named_scope from Ryan Daigle</a>. named_scope is previously known as the has_finder gem so I decided to give the gem a go. After I started using it I decided to <a href="http://piston.rubyforge.org/">pistonise romey</a> with edge rails to save myself the trouble of migrating from has_finder to named_scope when the next version of rails is released.</p>
+
+
+
+
+<p>I can say that named_scope has been a huge help in paying back a lot of the technical debt in romey, particularly in making models fat and controllers slimmer.</p>
+
+
+
+
+<p>All in all, it was a great experience cleaning up romey and going back to development on edge again. You can read about some of the new features coming soon <a href="http://blog.caboo.se/articles/2008/3/30/exciting-times-in-rails-land">here</a> if you are not already following it via <a href="http://dev.rubyonrails.org/">rails trac</a>.</p>
+
+
+
+
+<p>update: I should do another release of romey soon.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/03/26/nice-tumblr-features/">Nice Tumblr Features</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-26T16:53:00+11:00" pubdate  data-updated="true" >Mar 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The <a href="http://blog.shenie.info/archive" title="archive">archive</a> view. Also we can starting tagging and I <a href="http://blog.davidville.com/">saw</a> them mentioned comments.</p>
+
+
+<p>Though tagging is not yet searchable or browsable but things are looking good.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/03/26/one-liner-that-finds-all-directories-that-has-a-svn-subfolder/">One Liner That Finds All Directories That Has a .svn Subfolder</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-26T16:43:00+11:00" pubdate  data-updated="true" >Mar 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here&#8217;s a little 1 liner that let you find all the svn directories in the current folder.</p>
+
+
+
+
+<pre>find . -mindepth 2 -maxdepth 2 -name .svn -type d | sed -e's/\.svn//' </pre>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/03/26/sweet/">Sweet~~~</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-26T08:17:00+11:00" pubdate  data-updated="true" >Mar 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://blog.segment7.net/articles/2007/01/18/rubygems-0-9-1">Sweet~~~</a><br/><p>Didn&#8217;t know I got mentioned in that blog :)</p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <nav class="pagination">
+    <div>
+      
+        <a class="prev" href="/blog/page/6/">&larr; Older</a>
+      
+      <a href="/blog/archives">Blog Archives</a>
+      
+      <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+      
+    </div>
+  </nav>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/09/26/moved-to-octopress/">Moved to octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, spring-ws, SOAP & HTTP request&#8217;s content type</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp&#8217;s</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/11/26/convert-gpathresult-to-string-without-tag0/">Convert GPathResult to String without tag0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/07/08/overwrite-inploy-app-servers-restart-command/">Overwrite Inploy app servers&#8217; restart command</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("shenie", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/shenie" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @shenie</a>
+  
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Andy Shen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

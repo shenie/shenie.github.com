@@ -1,1 +1,651 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>boiling memoir</title>
+  <meta name="author" content="Andy Shen">
+
+  
+  <meta name="description" content="I have finally replaced my ugly ass of a github page about my projects with @octopress.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://shenie.github.com/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="boiling memoir" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">boiling memoir</a></h1>
+  
+    <h2>journey of one man</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:shenie.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/26/moved-to-octopress/">Moved to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2011-09-26T20:28:00+10:00" pubdate  data-updated="true" >Sep 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have finally replaced my ugly ass of a github page about my projects with <a href="http://twitter.com/octopress">@octopress</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, Spring-ws, SOAP & HTTP Request&#8217;s Content Type</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2011-06-09T23:39:00+10:00" pubdate  data-updated="true" >Jun 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you ever have to use Grails to process a fucked up SOAP request with a content type of application/x-www-form-urlencoded then this post is for you.</p>
+
+<p><em>p.s. eventually we will stop processing that kind of requests but for now we need it to work so client has time to fix their shit up</em></p>
+
+<p>Problem with application/x-www-form-urlencoded requests &amp; spring-ws&#8217; message factory is that it does not like requests with that content type. Rightly so!</p>
+
+<p>The message factory content type issue is obvious since the exception that it throws at you is pretty self-explanatory. The work-around is pretty easy, define your own messageFactory spring bean that is more lenient on the content type.</p>
+
+<p>But after the content type is sorted you would face the second problem &#8220;Premature end of file&#8221;. It took me a while to figure out what is happening. In retrospect it is actually quite logical. The end of file is referring to the request&#8217;s input stream which has been consumed by Grails filters before it gets to the message factory. The following filters are responsible for parsing the request and routing, luckily they are also subclasses of OncePerRequestFilter which means you can easily bypass them to avoid input stream been consumed.</p>
+
+<ol>
+<li>grailsWebRequest</li>
+<li>urlMapping</li>
+<li>hiddenHttpMethod</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to Use Groovy Categories in Gsp&#8217;s</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2011-06-09T19:58:00+10:00" pubdate  data-updated="true" >Jun 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You use <a href="http://docs.codehaus.org/display/GROOVY/Groovy+Categories">Groovy categories</a> in a canonical way in gsp&#8217;s. i.e. by surrounding all your gsp code inside a call to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;% use(YourCategoryClass) { %>
+</span><span class='line'>&lt;% } %></span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it gets troublesome quite soon, especially if the main gsp renders other partial templates.</p>
+
+<p>Luckily there is a way to hook into the view rendering workflow. The trick is to provide your own implementation of View that invoke the call to use categories around the view.render method. To do that you also need to override the default jspViewResolver spring bean with your own implementation of ViewResolver which uses your own implementation of View. Lastly if you need dynamically decide what categories classes to use then you can pass it in the model attribute inside your controller.</p>
+
+<p>The result will look something like this.</p>
+
+<div><script src='https://gist.github.com/1018017.js?file='></script>
+<noscript><pre><code>class MyGrailsViewResolver extends GrailsViewResolver {
+
+    @Override
+    protected View loadView(String viewName, Locale locale) {
+        new MyView(super.loadView(viewName, locale))
+    }
+
+    static class MyView implements View {
+        def View view
+
+        MyView(View view) {
+            this.view = view
+        }
+
+        String getContentType() {
+            view.getContentType()
+        }
+
+        void render(Map&lt;String, ?&gt; model, HttpServletRequest request, HttpServletResponse response) {
+            if (model.categories) {
+                use(model.remove('categories')) {
+                    view.render model, request, response
+                }
+            } else {
+                view.render model, request, response
+            }
+        }
+    }
+}
+</code></pre></noscript></div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/11/26/convert-gpathresult-to-string-without-tag0/">Convert GPathResult to String Without Tag0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-11-26T00:27:00+11:00" pubdate  data-updated="true" >Nov 26<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Groovy, you can use the follow code to convert node to XML String.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>groovy.xml.XmlUtil.serialize(GPathResult node)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But sometimes the XML you end up with contains tag0 namespace all over <br/>the elements. It happens because the doc contains default namespace <br/>with empty prefix, so groovy uses a default prefix which is &#8220;tag0&#8221;. <br/>The XML is still correct but it would be nice to not have to see that <br/>crap. To do so you need to create a new closure with the node and <br/>explicitly declare an empty string namespace. Then use <br/>StreamingMarkupBuilder to convert the newly created closure to String. <br/>The following code is how you would implement that logic.</p>
+
+<script src="http://gist.github.com/716310.js"></script>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/08/overwrite-inploy-app-servers-restart-command/">Overwrite Inploy App Servers&#8217; Restart Command</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-07-08T05:57:00+10:00" pubdate  data-updated="true" >Jul 8<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://github.com/dcrec1/inploy">Inploy</a> is a rails deployment solution. It comes with integration to restart 4 app servers:</p>
+
+<ul>
+<li>mongrel</li>
+<li>passenger</li>
+<li>thin</li>
+<li>unicorn</li>
+</ul>
+
+
+<p>I needed a way to change how Inploy restarts passenger since our passenger&#8217;s restart file is at a different location.</p>
+
+<p>I could&#8217;ve changed the command inside Inploy&#8217;s passenger.rb but I wanted to avoid that as there&#8217;s good chance that someone in the future won&#8217;t know to re-apply the change when they upgrade Inploy.  So I needed a way to monkey patch Inploy&#8217;s passenger module. My first attempt was to create my version of the Passenger module and require the file in rails&#8217; environment.rb. That was no good because Inploy&#8217;s update command does not seem to bootstrap the whole rails environment so my override simply wasn&#8217;t getting loaded.</p>
+
+<p>I had to find another way in to load my module for the deployment process. It turns out the solution I was looking for is in rake. Since Inploy&#8217;s update is just a rake task, I could create a passenger.rake in Rails.root/lib/tasks and define my restart_server override inside my custom passenger.rake.  Please let me know if there is a better / proper way to achieve what I needed. Otherwise hope this helps someone else.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/09/my-shortcut-to-open-any-gem-in-textmate-with-1-command/">My Shortcut to Open Any Gem in TextMate With 1 Command</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-12-09T20:42:00+11:00" pubdate  data-updated="true" >Dec 9<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Using the <a href="http://blog.peepcode.com/tutorials/2009/shell-method-missing/shell_method_missing.rb">implementation</a> from @peepcode&#8217;s <a href="http://blog.peepcode.com/tutorials/2009/shell-method-missing">blog</a> on shell method missing as a base. I have added another action (code snippet below) to open a gem library in TextMate by typing in the name of the gem followed by &#8220;.mate&#8221;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>when /^[A-Za-z0-9_\-\/]+\.mate$/
+</span><span class='line'>  # Open the gem in textmate
+</span><span class='line'>  # @example
+</span><span class='line'>  #   haml.mate
+</span><span class='line'>  gem_to_open = command.first.gsub(/\.mate$/, '')
+</span><span class='line'>  run "gem which #{gem_to_open} | tail -1 | xargs dirname | sed -e's/$/\\/../' | xargs mate"</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/11/26/download-sources-jar-from-maven/">Download Sources Jar From Maven</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-11-26T01:05:00+11:00" pubdate  data-updated="true" >Nov 26<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We use Maven, when Maven downloads dependencies it doesn&#8217;t download sources, which I rely on when learn and debug programs&#8230;. <br/>I was expecting, for what seem a simple thing to me, a flag that I can add in maven&#8217;s settings files or an option to pass to mvn command&#8230;. but I couldn&#8217;t find the solution (or anything close to it). Don&#8217;t get me wrong, there are solutions out there, but I just feel it is too much hassle for the task.  So I wrote a little script that go thru my repo and downloads any jar that doesn&#8217;t have its respective sources :p <br/><script src="http://gist.github.com/243263.js"></script></p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/11/23/imagemagick-and-jpeg-on-osx/">ImageMagick and JPEG on OSX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-11-23T19:52:00+11:00" pubdate  data-updated="true" >Nov 23<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am not a fan of port or fink so I always install ImageMagick from source.</p>
+
+
+
+
+<div>Recently I came across a problem where ImageMagick fails to identify JPEG&#8217;s.</div>
+
+
+
+
+<div>The error looks something like this</div>
+
+
+
+
+<div>identify: no decode delegate for this image format</div>
+
+
+
+
+<div>After some digging around it appears I need to install libjpeg and reinstall ImageMagick for JPEG support.</div>
+
+
+
+
+<div>So I downloaded <a href="http://www.imagemagick.org/download/delegates/jpegsrc.v7.tar.gz">jpegsrc.v7.tar.gz</a> and just run thru the standard configure, make &amp; make install then reinstalled ImageMagick.</div>
+
+
+
+
+<div>After the installation you should be able to see JPEG as one of the supported format via the command &#8221;identify -list format&#8221;.</div>
+
+
+
+
+<div>It should contain something like this.</div>
+
+
+
+
+<div>     JPEG* JPEG      rw-   Joint Photographic Experts Group JFIF format (70)<p></p></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/10/04/script-editor/">Script Editor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-10-04T00:58:00+10:00" pubdate  data-updated="true" >Oct 4<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a reminder for myself more than anything.</p>
+
+
+
+
+<p>To learn what you can do with an application using osascript, you can run Script Editor and click &#8220;Open the Application&#8217;s Dictionary&#8221; to see properties &amp;/methods that are available.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/10/01/apple-did-the-right-thing/">Apple Did the Right Thing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-10-01T18:08:00+10:00" pubdate  data-updated="true" >Oct 1<span>st</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://developer.apple.com/iphone/program/">Apple did the right thing</a><br/><p>NDA dropped for released software</p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <nav class="pagination">
+    <div>
+      
+        <a class="prev" href="/blog/page/2/">&larr; Older</a>
+      
+      <a href="/blog/archives">Blog Archives</a>
+      
+    </div>
+  </nav>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/09/26/moved-to-octopress/">Moved to octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, spring-ws, SOAP & HTTP request&#8217;s content type</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp&#8217;s</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/11/26/convert-gpathresult-to-string-without-tag0/">Convert GPathResult to String without tag0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/07/08/overwrite-inploy-app-servers-restart-command/">Overwrite Inploy app servers&#8217; restart command</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("shenie", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/shenie" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @shenie</a>
+  
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Andy Shen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

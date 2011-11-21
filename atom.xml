@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>boiling memoir</title>
+  <link href="http://shenie.github.com/atom.xml" rel="self"/>
+  <link href="http://shenie.github.com/"/>
+  <updated>2011-11-22T03:46:32+11:00</updated>
+  <id>http://shenie.github.com/</id>
+  <author>
+    <name>Andy Shen</name>
+    
+  </author>
+
+  
+  <entry>
+    <title>Moved to octopress</title>
+    <link href="http://shenie.github.com/blog/2011/09/26/moved-to-octopress/"/>
+    <updated>2011-09-26T20:28:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2011/09/26/moved-to-octopress</id>
+    <content type="html">&lt;p&gt;I have finally replaced my ugly ass of a github page about my projects with &lt;a href=&quot;http://twitter.com/octopress&quot;&gt;@octopress&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Grails, spring-ws, SOAP & HTTP request&#8217;s content type</title>
+    <link href="http://shenie.github.com/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/"/>
+    <updated>2011-06-09T23:39:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type</id>
+    <content type="html">&lt;p&gt;If you ever have to use Grails to process a fucked up SOAP request with a content type of application/x-www-form-urlencoded then this post is for you.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;p.s. eventually we will stop processing that kind of requests but for now we need it to work so client has time to fix their shit up&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Problem with application/x-www-form-urlencoded requests &amp;amp; spring-ws&amp;#8217; message factory is that it does not like requests with that content type. Rightly so!&lt;/p&gt;
+
+&lt;p&gt;The message factory content type issue is obvious since the exception that it throws at you is pretty self-explanatory. The work-around is pretty easy, define your own messageFactory spring bean that is more lenient on the content type.&lt;/p&gt;
+
+&lt;p&gt;But after the content type is sorted you would face the second problem &amp;#8220;Premature end of file&amp;#8221;. It took me a while to figure out what is happening. In retrospect it is actually quite logical. The end of file is referring to the request&amp;#8217;s input stream which has been consumed by Grails filters before it gets to the message factory. The following filters are responsible for parsing the request and routing, luckily they are also subclasses of OncePerRequestFilter which means you can easily bypass them to avoid input stream been consumed.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;grailsWebRequest&lt;/li&gt;
+&lt;li&gt;urlMapping&lt;/li&gt;
+&lt;li&gt;hiddenHttpMethod&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>How to use Groovy categories in gsp&#8217;s</title>
+    <link href="http://shenie.github.com/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/"/>
+    <updated>2011-06-09T19:58:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2011/06/09/how-to-use-groovy-categories-in-gsps</id>
+    <content type="html">&lt;p&gt;You use &lt;a href=&quot;http://docs.codehaus.org/display/GROOVY/Groovy+Categories&quot;&gt;Groovy categories&lt;/a&gt; in a canonical way in gsp&amp;#8217;s. i.e. by surrounding all your gsp code inside a call to&lt;/p&gt;
+
+&lt;figure class=&#8217;code&#8217;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line-number&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;span class=&#8217;line&#8217;&gt;&amp;lt;% use(YourCategoryClass) { %&gt;
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;&amp;lt;% } %&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;But it gets troublesome quite soon, especially if the main gsp renders other partial templates.&lt;/p&gt;
+
+&lt;p&gt;Luckily there is a way to hook into the view rendering workflow. The trick is to provide your own implementation of View that invoke the call to use categories around the view.render method. To do that you also need to override the default jspViewResolver spring bean with your own implementation of ViewResolver which uses your own implementation of View. Lastly if you need dynamically decide what categories classes to use then you can pass it in the model attribute inside your controller.&lt;/p&gt;
+
+&lt;p&gt;The result will look something like this.&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#8217;https://gist.github.com/1018017.js?file=&#8217;&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;class MyGrailsViewResolver extends GrailsViewResolver {
+
+    @Override
+    protected View loadView(String viewName, Locale locale) {
+        new MyView(super.loadView(viewName, locale))
+    }
+
+    static class MyView implements View {
+        def View view
+
+        MyView(View view) {
+            this.view = view
+        }
+
+        String getContentType() {
+            view.getContentType()
+        }
+
+        void render(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, HttpServletResponse response) {
+            if (model.categories) {
+                use(model.remove(&#8216;categories&#8217;)) {
+                    view.render model, request, response
+                }
+            } else {
+                view.render model, request, response
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Convert GPathResult to String without tag0</title>
+    <link href="http://shenie.github.com/blog/2010/11/26/convert-gpathresult-to-string-without-tag0/"/>
+    <updated>2010-11-26T00:27:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2010/11/26/convert-gpathresult-to-string-without-tag0</id>
+    <content type="html">&lt;p&gt;In Groovy, you can use the follow code to convert node to XML String.&lt;/p&gt;
+
+&lt;figure class=&#8217;code&#8217;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line-number&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;span class=&#8217;line&#8217;&gt;groovy.xml.XmlUtil.serialize(GPathResult node)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;But sometimes the XML you end up with contains tag0 namespace all over &lt;br/&gt;the elements. It happens because the doc contains default namespace &lt;br/&gt;with empty prefix, so groovy uses a default prefix which is &amp;#8220;tag0&amp;#8221;. &lt;br/&gt;The XML is still correct but it would be nice to not have to see that &lt;br/&gt;crap. To do so you need to create a new closure with the node and &lt;br/&gt;explicitly declare an empty string namespace. Then use &lt;br/&gt;StreamingMarkupBuilder to convert the newly created closure to String. &lt;br/&gt;The following code is how you would implement that logic.&lt;/p&gt;
+
+&lt;script src=&quot;http://gist.github.com/716310.js&quot;&gt;&lt;/script&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Overwrite Inploy app servers&#8217; restart command</title>
+    <link href="http://shenie.github.com/blog/2010/07/08/overwrite-inploy-app-servers-restart-command/"/>
+    <updated>2010-07-08T05:57:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2010/07/08/overwrite-inploy-app-servers-restart-command</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://github.com/dcrec1/inploy&quot;&gt;Inploy&lt;/a&gt; is a rails deployment solution. It comes with integration to restart 4 app servers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mongrel&lt;/li&gt;
+&lt;li&gt;passenger&lt;/li&gt;
+&lt;li&gt;thin&lt;/li&gt;
+&lt;li&gt;unicorn&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;I needed a way to change how Inploy restarts passenger since our passenger&amp;#8217;s restart file is at a different location.&lt;/p&gt;
+
+&lt;p&gt;I could&amp;#8217;ve changed the command inside Inploy&amp;#8217;s passenger.rb but I wanted to avoid that as there&amp;#8217;s good chance that someone in the future won&amp;#8217;t know to re-apply the change when they upgrade Inploy.  So I needed a way to monkey patch Inploy&amp;#8217;s passenger module. My first attempt was to create my version of the Passenger module and require the file in rails&amp;#8217; environment.rb. That was no good because Inploy&amp;#8217;s update command does not seem to bootstrap the whole rails environment so my override simply wasn&amp;#8217;t getting loaded.&lt;/p&gt;
+
+&lt;p&gt;I had to find another way in to load my module for the deployment process. It turns out the solution I was looking for is in rake. Since Inploy&amp;#8217;s update is just a rake task, I could create a passenger.rake in Rails.root/lib/tasks and define my restart_server override inside my custom passenger.rake.  Please let me know if there is a better / proper way to achieve what I needed. Otherwise hope this helps someone else.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>My shortcut to open any gem in TextMate with 1 command</title>
+    <link href="http://shenie.github.com/blog/2009/12/09/my-shortcut-to-open-any-gem-in-textmate-with-1-command/"/>
+    <updated>2009-12-09T20:42:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2009/12/09/my-shortcut-to-open-any-gem-in-textmate-with-1-command</id>
+    <content type="html">&lt;p&gt;Using the &lt;a href=&quot;http://blog.peepcode.com/tutorials/2009/shell-method-missing/shell_method_missing.rb&quot;&gt;implementation&lt;/a&gt; from @peepcode&amp;#8217;s &lt;a href=&quot;http://blog.peepcode.com/tutorials/2009/shell-method-missing&quot;&gt;blog&lt;/a&gt; on shell method missing as a base. I have added another action (code snippet below) to open a gem library in TextMate by typing in the name of the gem followed by &amp;#8220;.mate&amp;#8221;.&lt;/p&gt;
+
+&lt;figure class=&#8217;code&#8217;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line-number&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line-number&#8217;&gt;6&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;span class=&#8217;line&#8217;&gt;when /^[A-Za-z0-9_&#45;\/]+&#46;mate$/
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;  # Open the gem in textmate
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;  # @example
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;  #   haml.mate
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;  gem_to_open = command.first.gsub(/&#46;mate$/, &#8221;)
+&lt;/span&gt;&lt;span class=&#8217;line&#8217;&gt;  run &quot;gem which #{gem_to_open} | tail -1 | xargs dirname | sed -e&#8217;s/$/&#92;/../&#8217; | xargs mate&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Download sources jar from maven</title>
+    <link href="http://shenie.github.com/blog/2009/11/26/download-sources-jar-from-maven/"/>
+    <updated>2009-11-26T01:05:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2009/11/26/download-sources-jar-from-maven</id>
+    <content type="html">&lt;p&gt;We use Maven, when Maven downloads dependencies it doesn&amp;#8217;t download sources, which I rely on when learn and debug programs&amp;#8230;. &lt;br/&gt;I was expecting, for what seem a simple thing to me, a flag that I can add in maven&amp;#8217;s settings files or an option to pass to mvn command&amp;#8230;. but I couldn&amp;#8217;t find the solution (or anything close to it). Don&amp;#8217;t get me wrong, there are solutions out there, but I just feel it is too much hassle for the task.  So I wrote a little script that go thru my repo and downloads any jar that doesn&amp;#8217;t have its respective sources :p &lt;br/&gt;&lt;script src=&quot;http://gist.github.com/243263.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>ImageMagick and JPEG on OSX</title>
+    <link href="http://shenie.github.com/blog/2009/11/23/imagemagick-and-jpeg-on-osx/"/>
+    <updated>2009-11-23T19:52:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2009/11/23/imagemagick-and-jpeg-on-osx</id>
+    <content type="html">&lt;p&gt;I am not a fan of port or fink so I always install ImageMagick from source.&lt;/p&gt;
+
+
+
+
+&lt;div&gt;Recently I came across a problem where ImageMagick fails to identify JPEG&amp;#8217;s.&lt;/div&gt;
+
+
+
+
+&lt;div&gt;The error looks something like this&lt;/div&gt;
+
+
+
+
+&lt;div&gt;identify: no decode delegate for this image format&lt;/div&gt;
+
+
+
+
+&lt;div&gt;After some digging around it appears I need to install libjpeg and reinstall ImageMagick for JPEG support.&lt;/div&gt;
+
+
+
+
+&lt;div&gt;So I downloaded &lt;a href=&quot;http://www.imagemagick.org/download/delegates/jpegsrc.v7.tar.gz&quot;&gt;jpegsrc.v7.tar.gz&lt;/a&gt; and just run thru the standard configure, make &amp;amp; make install then reinstalled ImageMagick.&lt;/div&gt;
+
+
+
+
+&lt;div&gt;After the installation you should be able to see JPEG as one of the supported format via the command &amp;#8221;identify -list format&amp;#8221;.&lt;/div&gt;
+
+
+
+
+&lt;div&gt;It should contain something like this.&lt;/div&gt;
+
+
+
+
+&lt;div&gt;     JPEG* JPEG      rw-   Joint Photographic Experts Group JFIF format (70)&lt;p&gt;&lt;/p&gt;&lt;/div&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Script Editor</title>
+    <link href="http://shenie.github.com/blog/2008/10/04/script-editor/"/>
+    <updated>2008-10-04T00:58:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/10/04/script-editor</id>
+    <content type="html">&lt;p&gt;This is a reminder for myself more than anything.&lt;/p&gt;
+
+
+
+
+&lt;p&gt;To learn what you can do with an application using osascript, you can run Script Editor and click &amp;#8220;Open the Application&amp;#8217;s Dictionary&amp;#8221; to see properties &amp;amp;/methods that are available.&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Apple did the right thing</title>
+    <link href="http://shenie.github.com/blog/2008/10/01/apple-did-the-right-thing/"/>
+    <updated>2008-10-01T18:08:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/10/01/apple-did-the-right-thing</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://developer.apple.com/iphone/program/&quot;&gt;Apple did the right thing&lt;/a&gt;&lt;br/&gt;&lt;p&gt;NDA dropped for released software&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>iPhone NDA</title>
+    <link href="http://shenie.github.com/blog/2008/09/27/iphone-nda/"/>
+    <updated>2008-09-27T17:01:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/09/27/iphone-nda</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.onrails.org/articles/2008/09/26/iphone-nda-call-for-arms&quot;&gt;iPhone NDA&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Wonder when is Android powered phones will come to OZ. It&amp;#8217;d be fun to write app to run on my own phone :)&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Fun with proc</title>
+    <link href="http://shenie.github.com/blog/2008/09/09/fun-with-proc/"/>
+    <updated>2008-09-09T21:29:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/09/09/fun-with-proc</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://pragdave.blogs.pragprog.com/pragdave/2008/09/fun-with-procs.html&quot;&gt;Fun with proc&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Curry is going to be a double edged sword.&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>git survey</title>
+    <link href="http://shenie.github.com/blog/2008/09/01/git-survey/"/>
+    <updated>2008-09-01T10:48:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/09/01/git-survey</id>
+    <content type="html">&lt;p&gt;Some of the commands in the &lt;a href=&quot;http://www.survs.com/survey?id=M3PIVU72&amp;amp;channel=2WXE4BVTW8&quot;&gt;survey&lt;/a&gt; looks interesting, must find time to learn them.&lt;/p&gt;
+
+
+
+
+&lt;pre&gt;
+git add -i / -p
+git add -u / -A
+git am
+git am -i
+git apply
+git apply &#8211;whitespace=fix
+git archive
+git bisect
+git bisect run &lt;cmd&gt;
+git annotate
+git gui blame
+git blame
+git blame -L &lt;start&gt;,&lt;end&gt; etc.
+git bundle
+git cherry
+git cherry-pick
+git cherry-pick -n
+git citool
+git clean
+git add + git commit
+git commit -a
+git commit &lt;file&gt;&#8230;
+git commit -i &lt;file&gt;&#8230;
+git commit &#8211;amend
+git cvsexportcommit
+git cvsserver
+git daemon
+git daemon (pushing enabled)
+git &#8230; &#8211;dirstat
+git fetch [&lt;options&gt;]
+git filter-branch
+git format-patch
+git grep
+git imap-send
+git instaweb
+git log &#8211;grep/&#8211;author/&#8230;
+git log -S&lt;string&gt; (pickaxe search)
+git log &#8211;graph
+git merge
+git merge with strategy
+git merge &#8211;squash
+git mergetool
+git pull (no remote)
+git pull &#8211;rebase [&lt;options&gt;]
+git pull &lt;remote&gt;
+git pull &lt;url&gt;&lt;ref&gt;
+git push
+git relink
+git rebase
+git rebase -i
+git remote
+git remote update
+git request-pull
+git revert
+git send-email
+git show-branch
+git shortlog
+git shortlog -s
+git stash
+git stash &#8211;keep-index
+git submodule
+git svn
+git whatchanged
+git gui
+gitk
+&lt;/ref&gt;&lt;/url&gt;&lt;/remote&gt;&lt;/options&gt;&lt;/string&gt;&lt;/options&gt;&lt;/file&gt;&lt;/file&gt;&lt;/end&gt;&lt;/start&gt;&lt;/cmd&gt;&lt;/pre&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Jar decompiler</title>
+    <link href="http://shenie.github.com/blog/2008/07/05/jar-decompiler/"/>
+    <updated>2008-07-05T02:11:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/07/05/jar-decompiler</id>
+    <content type="html">&lt;p&gt;A while ago I posted some shell scripts to decompile java classes.&lt;/p&gt;
+
+
+
+
+&lt;p&gt;I decided to re-implement it in &lt;a href=&quot;http://github.com/shenie/jar_decompiler/tree/master&quot;&gt;ruby&lt;/a&gt; so I can use it between my work (Windows) and home (OS X) machines.&lt;/p&gt;
+
+
+
+
+&lt;p&gt;This version does not require you to extract the class files first. You simply pass the jar file to the script and it&amp;#8217;ll decompress and decompile it into a directory with the same name as the jar file without .jar.&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Twitter&#8217;s auto follow script in ruby</title>
+    <link href="http://shenie.github.com/blog/2008/07/02/twitters-auto-follow-script-in-ruby/"/>
+    <updated>2008-07-02T07:28:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/07/02/twitters-auto-follow-script-in-ruby</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://github.com/shenie/auto_follow/tree/master&quot;&gt;Twitter&amp;#8217;s auto follow script in ruby&lt;/a&gt;&lt;br/&gt;&lt;p&gt;As requested by &lt;a href=&quot;http://twitter.com/joshowens/statuses/846051862&quot;&gt;Josh&lt;/a&gt;&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>How to map a network drive</title>
+    <link href="http://shenie.github.com/blog/2008/06/30/how-to-map-a-network-drive/"/>
+    <updated>2008-06-30T07:37:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/06/30/how-to-map-a-network-drive</id>
+    <content type="html">&lt;pre&gt;
+net use x: &#92;{server}\d$  /USER:{server}\{username} {password}
+&lt;/pre&gt;
+
+
+
+
+&lt;p&gt;Basically says you want to map d: drive on {server} to your x: drive as the {username}, which is a login locally on {server}&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Apple & Google&#8217;s open web efforts</title>
+    <link href="http://shenie.github.com/blog/2008/06/27/apple-googles-open-web-efforts/"/>
+    <updated>2008-06-27T01:07:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/06/27/apple-googles-open-web-efforts</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.roughlydrafted.com/2008/06/14/cocoa-for-windows-flash-killer-sproutcore/&quot;&gt;Apple &amp;amp; Google&amp;#8217;s open web efforts&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>How to decompile everything</title>
+    <link href="http://shenie.github.com/blog/2008/06/13/how-to-decompile-everything/"/>
+    <updated>2008-06-13T07:30:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/06/13/how-to-decompile-everything</id>
+    <content type="html">&lt;p&gt;Quick script to decompile all the class files.&lt;/p&gt;
+
+
+
+
+&lt;pre&gt;
+find . -name &quot;*.class&quot; -not -name &quot;*\$*&quot; | while read class
+do
+  dir=`dirname $class`
+  file=`basename $class .class`
+  pushd $dir &amp;gt;/dev/null
+  jad -p ${file}.class &amp;gt; ${file}.java
+  popd &amp;gt;/dev/null
+done
+&lt;/pre&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>wow-scary-but-pretty</title>
+    <link href="http://shenie.github.com/blog/2008/06/06/wow-scary-but-pretty/"/>
+    <updated>2008-06-06T01:39:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/06/06/wow-scary-but-pretty</id>
+    <content type="html">&lt;p&gt;&lt;img src=&quot;http://25.media.tumblr.com/Rp426TxkO9vwceijixVk7kgR_500.jpg&quot; alt=&quot;&quot;/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p&gt;WOW! scary but pretty.&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>OSX&#8217;s ruby framework</title>
+    <link href="http://shenie.github.com/blog/2008/06/05/osx-ruby-framework/"/>
+    <updated>2008-06-05T09:15:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2008/06/05/osx-ruby-framework</id>
+    <content type="html">&lt;p&gt;I think new version of ruby is meant to be installed with the following prefix, using 1.8.7 as an example.&lt;/p&gt;
+
+
+
+
+&lt;p&gt;/System/Library/Frameworks/Ruby.framework/Versions/1.8.7/usr&lt;/p&gt;
+
+
+
+
+&lt;p&gt;That way you can just /System/Library/Frameworks/Ruby.framework/Versions/Current to the version you want.&lt;/p&gt;
+
+</content>
+  </entry>
+  
+</feed>
