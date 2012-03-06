@@ -4,13 +4,66 @@
   <title>boiling memoir</title>
   <link href="http://shenie.github.com/atom.xml" rel="self"/>
   <link href="http://shenie.github.com/"/>
-  <updated>2011-11-22T03:46:32+11:00</updated>
+  <updated>2012-03-06T20:19:12+11:00</updated>
   <id>http://shenie.github.com/</id>
   <author>
     <name>Andy Shen</name>
     
   </author>
 
+  
+  <entry>
+    <title>The ClearCase Effect</title>
+    <link href="http://shenie.github.com/blog/2012/03/06/the-clearcase-effect/"/>
+    <updated>2012-03-06T20:00:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2012/03/06/the-clearcase-effect</id>
+    <content type="html">&lt;p&gt;A while ago I had the pleasure of experiencing working with ClearCase, NOT!&lt;/p&gt;
+
+&lt;p&gt;I made a few notes on how it affected me and as far as I could tell, the team.&lt;/p&gt;
+
+&lt;p&gt;Not updating your own codebase often because&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;update is damn slow&lt;/li&gt;
+&lt;li&gt;risk of codebase not compiling after update as checked out/hijacked files are not updated&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Lots of CruiseControl failures were due to&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;accidental checkin files before they are complete when refactoring or creating new files&lt;/li&gt;
+&lt;li&gt;newly created files not checked in&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;CruiseControl failures de-sensitised the team&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;people stop caring/responding to build failures making CI less useful&lt;/li&gt;
+&lt;li&gt;reduced team moral&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;The above issues are avoidable but:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it is not suppose to be this hard&lt;/li&gt;
+&lt;li&gt;workflow using ClearCase is not efficient and optimised for developers&lt;/li&gt;
+&lt;li&gt;what are the benefits with keep using ClearCase that prevented the team from moving away from it?&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Also some general issues with ClearCase&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it is not a tool that many people know and know it well to use it efficiently&lt;/li&gt;
+&lt;li&gt;it is not a tool to attract/retain staff&lt;/li&gt;
+&lt;li&gt;developers were just not happy using it&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+  </entry>
   
   <entry>
     <title>Moved to octopress</title>
@@ -435,26 +488,6 @@ done
     <updated>2008-06-06T01:39:00+10:00</updated>
     <id>http://shenie.github.com/blog/2008/06/06/wow-scary-but-pretty</id>
     <content type="html">&lt;p&gt;&lt;img src=&quot;http://25.media.tumblr.com/Rp426TxkO9vwceijixVk7kgR_500.jpg&quot; alt=&quot;&quot;/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p&gt;WOW! scary but pretty.&lt;/p&gt;&lt;/p&gt;
-</content>
-  </entry>
-  
-  <entry>
-    <title>OSX&#8217;s ruby framework</title>
-    <link href="http://shenie.github.com/blog/2008/06/05/osx-ruby-framework/"/>
-    <updated>2008-06-05T09:15:00+10:00</updated>
-    <id>http://shenie.github.com/blog/2008/06/05/osx-ruby-framework</id>
-    <content type="html">&lt;p&gt;I think new version of ruby is meant to be installed with the following prefix, using 1.8.7 as an example.&lt;/p&gt;
-
-
-
-
-&lt;p&gt;/System/Library/Frameworks/Ruby.framework/Versions/1.8.7/usr&lt;/p&gt;
-
-
-
-
-&lt;p&gt;That way you can just /System/Library/Frameworks/Ruby.framework/Versions/Current to the version you want.&lt;/p&gt;
-
 </content>
   </entry>
   
