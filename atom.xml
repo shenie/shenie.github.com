@@ -4,13 +4,50 @@
   <title>boiling memoir</title>
   <link href="http://shenie.github.com/atom.xml" rel="self"/>
   <link href="http://shenie.github.com/"/>
-  <updated>2012-03-06T20:19:12+11:00</updated>
+  <updated>2012-03-21T22:15:27+11:00</updated>
   <id>http://shenie.github.com/</id>
   <author>
     <name>Andy Shen</name>
     
   </author>
 
+  
+  <entry>
+    <title>Ruby on Rails &amp; Sybase</title>
+    <link href="http://shenie.github.com/blog/2012/03/21/ruby-on-rails-and-sybase/"/>
+    <updated>2012-03-21T22:05:00+11:00</updated>
+    <id>http://shenie.github.com/blog/2012/03/21/ruby-on-rails-and-sybase</id>
+    <content type="html">&lt;p&gt;This was my notes many years ago of getting Ruby on Rails to run on Sybase.
+It is no doubt out-of-date by now. But still an interesting read for me, kind of like reading an old diary.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I have been trying to learn how to get Rails to work with Sybase for a while because Sybase is predominantly the database at my work.&lt;/p&gt;
+
+&lt;p&gt;Since I am not exactly free nor allowed to spend chunks of my time working on this stuff at work I haven&amp;#8217;t had much success. For some reason, there isn&amp;#8217;t as much resource on getting Rails to work with Sybase compared to MySQL or PosgreSQL.&lt;/p&gt;
+
+&lt;p&gt;So every now and then I&amp;#8217;d research a bit to see if anything new in the field comes up that might help. On one such research I found http://wiki.rubyonrails.com/rails/pages/HowToSetupSybaseAdapterOnRails on Sybase Rails wiki http://wiki.rubyonrails.com/rails/pages/Sybase. It is the instructions for Suse 7.3, and during my research I learn that I can install &lt;a href=&quot;http://www.sybase.com/partner/mac&quot;&gt;Sybase on OS X&lt;/a&gt; so I thought it was worth to give the instructions a try.&lt;/p&gt;
+
+&lt;p&gt;Overall the process wasn&amp;#8217;t too bad, I skipped step 4 &amp;amp; 5 (but later I had to setup SYBASE environment, something complained about it). Also was quite lucky the extconfig.rb (step 7) in &lt;a href=&quot;http://raa.ruby-lang.org/project/sybase-ctlib/&quot;&gt;Ruby Sybase Library&lt;/a&gt; already contains a commented out section for OS X configuration (it was written for Panther but it worked for me on Tiger). I can&amp;#8217;t remember for sure if step 7 was when I was faced with the problem of missing libraries but either way I was able to find the missing library name and &lt;a href=&quot;http://www.omnis.net/technotes/tnsq0009.html&quot;&gt;got the answer&lt;/a&gt; (I picked the Symbolic Links solution).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /usr/libsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybtcl.dylib libsybtcl.dylibsudo
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybdb.dylib libsybdb.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybintl.dylib libsybintl.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybct.dylib libsybct.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcs.dylib libsybcs.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After step 7 (create Makefile &amp;amp; compile by running make) I tested Ruby Sybase Library in the local folder by running sqlsample.rb against Sybase and it all worked so things were looking promising.&lt;/p&gt;
+
+&lt;p&gt;However step 8 expects step 7 to have created 4 files which are to be installed in system directory (any ruby load path). But since it had already passed the test I didn&amp;#8217;t think too much of it and just copied the only 3 out of 4 files that I could find, created a new project (running on edge rails) configure database.yml to run against sybase adapter then test it using script/console. Unfortunately that wasn&amp;#8217;t enough. What made it worse was that the error message was really not helpful because it said &amp;#8220;database configuration specifies nonexistent sybase adapter&amp;#8221;, by running console with &amp;#8211;trace I found the line that raised the error and the condition that caused the error. I was still confused after I found the line because it was testing if the class has a method called sybase_connection, which I knew for sure existed in sybase_adapter.rb. After a while I finally noticed that sybase_adapter.rb starts a begin block then require &amp;#8216;sybsql&amp;#8217; (which is one of the 3 files I installed) and that require statement is throwing an error which is rescued right at the end of the file and the catch block doesn&amp;#8217;t do anything (no logging of any sort). So after I modified it to printed out the error, I finally found out the real reason why sybase adapter isn&amp;#8217;t loaded properly.&lt;/p&gt;
+
+&lt;p&gt;The error turned out to be &amp;#8220;unable to load sybct.o&amp;#8221;. The error seems strange because I already tested the library with sqlsample.rb so something that was in the local library directory when running sqlsample.rb is also needed to be installed in system directory. A couple of trial and error the 4th file that is needed turns out to be sybct.bundle. After installing that file I finally got rails to run on Sybase, wahoo!!!&lt;/p&gt;
+
+&lt;p&gt;I grew a bit more comfortable about ActiveRecord during this experience, get to install Sybase locally (so I&amp;#8217;ll get a chance to learn about Sybase admin functions) and get a little bit closer to getting Rails to work with Sybase at work :)&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>The ClearCase Effect</title>
@@ -479,15 +516,6 @@ do
 done
 &lt;/pre&gt;
 
-</content>
-  </entry>
-  
-  <entry>
-    <title>wow-scary-but-pretty</title>
-    <link href="http://shenie.github.com/blog/2008/06/06/wow-scary-but-pretty/"/>
-    <updated>2008-06-06T01:39:00+10:00</updated>
-    <id>http://shenie.github.com/blog/2008/06/06/wow-scary-but-pretty</id>
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://25.media.tumblr.com/Rp426TxkO9vwceijixVk7kgR_500.jpg&quot; alt=&quot;&quot;/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p&gt;WOW! scary but pretty.&lt;/p&gt;&lt;/p&gt;
 </content>
   </entry>
   

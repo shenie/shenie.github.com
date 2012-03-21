@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby on Rails &amp; Sybase - boiling memoir</title>
+  <meta name="author" content="Andy Shen">
+
+  
+  <meta name="description" content="This was my notes many years ago of getting Ruby on Rails to run on Sybase.It is no doubt out-of-date by now. But still an interesting read for me,...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://shenie.github.com/blog/2012/03/21/ruby-on-rails-and-sybase/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="boiling memoir" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">boiling memoir</a></h1>
+  
+    <h2>journey of one man</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:shenie.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby on Rails &amp; Sybase</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-03-21T22:05:00+11:00" pubdate  data-updated="true" >Mar 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This was my notes many years ago of getting Ruby on Rails to run on Sybase.
+It is no doubt out-of-date by now. But still an interesting read for me, kind of like reading an old diary.</p>
+
+<hr />
+
+<p>I have been trying to learn how to get Rails to work with Sybase for a while because Sybase is predominantly the database at my work.</p>
+
+<p>Since I am not exactly free nor allowed to spend chunks of my time working on this stuff at work I haven&#8217;t had much success. For some reason, there isn&#8217;t as much resource on getting Rails to work with Sybase compared to MySQL or PosgreSQL.</p>
+
+<p>So every now and then I&#8217;d research a bit to see if anything new in the field comes up that might help. On one such research I found http://wiki.rubyonrails.com/rails/pages/HowToSetupSybaseAdapterOnRails on Sybase Rails wiki http://wiki.rubyonrails.com/rails/pages/Sybase. It is the instructions for Suse 7.3, and during my research I learn that I can install <a href="http://www.sybase.com/partner/mac">Sybase on OS X</a> so I thought it was worth to give the instructions a try.</p>
+
+<p>Overall the process wasn&#8217;t too bad, I skipped step 4 &amp; 5 (but later I had to setup SYBASE environment, something complained about it). Also was quite lucky the extconfig.rb (step 7) in <a href="http://raa.ruby-lang.org/project/sybase-ctlib/">Ruby Sybase Library</a> already contains a commented out section for OS X configuration (it was written for Panther but it worked for me on Tiger). I can&#8217;t remember for sure if step 7 was when I was faced with the problem of missing libraries but either way I was able to find the missing library name and <a href="http://www.omnis.net/technotes/tnsq0009.html">got the answer</a> (I picked the Symbolic Links solution).</p>
+
+<pre><code>cd /usr/libsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybtcl.dylib libsybtcl.dylibsudo
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybdb.dylib libsybdb.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybintl.dylib libsybintl.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybct.dylib libsybct.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcs.dylib libsybcs.dylibsudo 
+ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
+</code></pre>
+
+<p>After step 7 (create Makefile &amp; compile by running make) I tested Ruby Sybase Library in the local folder by running sqlsample.rb against Sybase and it all worked so things were looking promising.</p>
+
+<p>However step 8 expects step 7 to have created 4 files which are to be installed in system directory (any ruby load path). But since it had already passed the test I didn&#8217;t think too much of it and just copied the only 3 out of 4 files that I could find, created a new project (running on edge rails) configure database.yml to run against sybase adapter then test it using script/console. Unfortunately that wasn&#8217;t enough. What made it worse was that the error message was really not helpful because it said &#8220;database configuration specifies nonexistent sybase adapter&#8221;, by running console with &#8211;trace I found the line that raised the error and the condition that caused the error. I was still confused after I found the line because it was testing if the class has a method called sybase_connection, which I knew for sure existed in sybase_adapter.rb. After a while I finally noticed that sybase_adapter.rb starts a begin block then require &#8216;sybsql&#8217; (which is one of the 3 files I installed) and that require statement is throwing an error which is rescued right at the end of the file and the catch block doesn&#8217;t do anything (no logging of any sort). So after I modified it to printed out the error, I finally found out the real reason why sybase adapter isn&#8217;t loaded properly.</p>
+
+<p>The error turned out to be &#8220;unable to load sybct.o&#8221;. The error seems strange because I already tested the library with sqlsample.rb so something that was in the local library directory when running sqlsample.rb is also needed to be installed in system directory. A couple of trial and error the 4th file that is needed turns out to be sybct.bundle. After installing that file I finally got rails to run on Sybase, wahoo!!!</p>
+
+<p>I grew a bit more comfortable about ActiveRecord during this experience, get to install Sybase locally (so I&#8217;ll get a chance to learn about Sybase admin functions) and get a little bit closer to getting Rails to work with Sybase at work :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andy Shen</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-03-21T22:05:00+11:00" pubdate  data-updated="true" >Mar 21<span>st</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://shenie.github.com/blog/2012/03/21/ruby-on-rails-and-sybase/" data-via="shenie" data-counturl="http://shenie.github.com/blog/2012/03/21/ruby-on-rails-and-sybase/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/ruby-on-rails-and-sybase/">Ruby on Rails &amp; Sybase</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/06/the-clearcase-effect/">The ClearCase Effect</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/26/moved-to-octopress/">Moved to octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, spring-ws, SOAP & HTTP request's content type</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp's</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("shenie", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/shenie" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @shenie</a>
+  
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andy Shen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

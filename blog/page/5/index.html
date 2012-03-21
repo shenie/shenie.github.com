@@ -9,7 +9,7 @@
   <meta name="author" content="Andy Shen">
 
   
-  <meta name="description" content="I am interested in wiki. So when I saw the new Merb wiki I naturally wanted to check it out. One problem, it&#8217;s on github and I don&#8217;t ha...">
+  <meta name="description" content="I was reading Tim&#8217;s post which reminded me that I had implemented similar things with Romey. Basically because I was running Romey on a Mac M...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,6 +60,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/05/03/romey-mashup/">Romey Mashup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-05-03T09:38:00+10:00" pubdate  data-updated="true" >May 3<span>rd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was reading <a href="http://www.tbray.org/ongoing/When/200x/2008/04/30/PDML-Twitter-Mashup">Tim&#8217;s post</a> which reminded me that I had implemented similar things with Romey. Basically because I was running Romey on a Mac Mini at home and didn&#8217;t want to make it accessible over the internet I created another way to create transactions in Romey. It was done with a POP account at my ISP, ruby script running by cron on the Mac Mini. I stopped running the cron job since I changed ISD but having read Tim&#8217;s post I am thinking about reactivating the service again and extending it to involve Twitter as well. I already have written ruby scripts that post updates to Twitter (<a href="https://twitter.com/myfinance">this</a> and <a href="https://twitter.com/railsrumblerank">this</a>) before. I think it&#8217;ll be cool if Romey could post to twitter when certain condition is triggered, e.g. going over budget.</p>
+
+
+
+
+<p>After that I just need to have a mobile phone plan with internet then I can create Romey transactions anyway by sending an email and receive notifications from Romey via Twitter.</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -453,46 +493,6 @@ It&#8217;s counterintuitive but I guess it is more important to know which file 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2008/03/26/one-liner-that-finds-all-directories-that-has-a-svn-subfolder/">One Liner That Finds All Directories That Has a .svn Subfolder</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-  
-
-
-
-<time datetime="2008-03-26T16:43:00+11:00" pubdate  data-updated="true" >Mar 26<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here&#8217;s a little 1 liner that let you find all the svn directories in the current folder.</p>
-
-
-
-
-<pre>find . -mindepth 2 -maxdepth 2 -name .svn -type d | sed -e's/\.svn//' </pre>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <nav class="pagination">
     <div>
       
@@ -512,6 +512,10 @@ It&#8217;s counterintuitive but I guess it is more important to know which file 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/21/ruby-on-rails-and-sybase/">Ruby on Rails &amp; Sybase</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/06/the-clearcase-effect/">The ClearCase Effect</a>
       </li>
     
@@ -525,10 +529,6 @@ It&#8217;s counterintuitive but I guess it is more important to know which file 
     
       <li class="post">
         <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp&#8217;s</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2010/11/26/convert-gpathresult-to-string-without-tag0/">Convert GPathResult to String without tag0</a>
       </li>
     
   </ul>
