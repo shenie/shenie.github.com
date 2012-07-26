@@ -9,7 +9,7 @@
   <meta name="author" content="Andy Shen">
 
   
-  <meta name="description" content="This is a reminder for myself more than anything.To learn what you can do with an application using osascript, you can run Script Editor and click ...">
+  <meta name="description" content="I am not a fan of port or fink so I always install ImageMagick from source.Recently I came across a problem where ImageMagick fails to identify JPEG &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,6 +60,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/11/23/imagemagick-and-jpeg-on-osx/">ImageMagick and JPEG on OSX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-11-23T19:52:00+11:00" pubdate  data-updated="true" >Nov 23<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am not a fan of port or fink so I always install ImageMagick from source.</p>
+
+
+
+
+<div>Recently I came across a problem where ImageMagick fails to identify JPEG&#8217;s.</div>
+
+
+
+
+<div>The error looks something like this</div>
+
+
+
+
+<div>identify: no decode delegate for this image format</div>
+
+
+
+
+<div>After some digging around it appears I need to install libjpeg and reinstall ImageMagick for JPEG support.</div>
+
+
+
+
+<div>So I downloaded <a href="http://www.imagemagick.org/download/delegates/jpegsrc.v7.tar.gz">jpegsrc.v7.tar.gz</a> and just run thru the standard configure, make &amp; make install then reinstalled ImageMagick.</div>
+
+
+
+
+<div>After the installation you should be able to see JPEG as one of the supported format via the command &#8221;identify -list format&#8221;.</div>
+
+
+
+
+<div>It should contain something like this.</div>
+
+
+
+
+<div>     JPEG* JPEG      rw-   Joint Photographic Experts Group JFIF format (70)<p></p></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -464,55 +539,6 @@ net use x: \\{server}\d$  /USER:{server}\{username} {password}
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2008/06/13/how-to-decompile-everything/">How to Decompile Everything</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-  
-
-
-
-<time datetime="2008-06-13T07:30:00+10:00" pubdate  data-updated="true" >Jun 13<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Quick script to decompile all the class files.</p>
-
-
-
-
-<pre>
-find . -name "*.class" -not -name "*\$*" | while read class
-do
-  dir=`dirname $class`
-  file=`basename $class .class`
-  pushd $dir &gt;/dev/null
-  jad -p ${file}.class &gt; ${file}.java
-  popd &gt;/dev/null
-done
-</pre>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <nav class="pagination">
     <div>
       
@@ -532,6 +558,10 @@ done
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3/">WARNING: Nokogiri was built against LibXML version 2.7.3</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/21/ruby-on-rails-and-sybase/">Ruby on Rails &amp; Sybase</a>
       </li>
     
@@ -545,10 +575,6 @@ done
     
       <li class="post">
         <a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, spring-ws, SOAP & HTTP request&#8217;s content type</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp&#8217;s</a>
       </li>
     
   </ul>
@@ -573,7 +599,7 @@ done
 
 
 
-
+Included file &#8216;asides/googleplus.html&#8217; not found in _includes directory
   
 </aside>
 
@@ -591,14 +617,6 @@ done
   
 
   
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
 
   
   <script type="text/javascript">

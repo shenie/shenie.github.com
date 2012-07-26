@@ -4,13 +4,32 @@
   <title>boiling memoir</title>
   <link href="http://shenie.github.com/atom.xml" rel="self"/>
   <link href="http://shenie.github.com/"/>
-  <updated>2012-03-21T22:15:27+11:00</updated>
+  <updated>2012-07-26T22:06:58+10:00</updated>
   <id>http://shenie.github.com/</id>
   <author>
     <name>Andy Shen</name>
     
   </author>
 
+  
+  <entry>
+    <title>WARNING: Nokogiri was built against LibXML version 2.7.3</title>
+    <link href="http://shenie.github.com/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3/"/>
+    <updated>2012-07-26T22:04:00+10:00</updated>
+    <id>http://shenie.github.com/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3</id>
+    <content type="html">&lt;p&gt;Upgraded to Mountain Lion and started getting the above warning when using nokogiri.&lt;/p&gt;
+
+&lt;p&gt;It is happening because OSX has a default libxml2 in /usr/lib/libxml2.2.dylib&lt;/p&gt;
+
+&lt;p&gt;But the libxml2 headers used during nokogiri compilation are the ones in /usr/include/libxml2.
+nb.I don&amp;#8217;t use macport or homebrew.&lt;/p&gt;
+
+&lt;p&gt;So /usr/include/libxml2 is version 2.7.3 which you can see by looking inside libxml/xmlversion.h&lt;/p&gt;
+
+&lt;p&gt;To get rid of the warning in nokogiri I needed to get matching headers for libxml2 2.7.8, so I downloaded ftp://xmlsoft.org/libxml2/libxml2-2.7.8.tar.gz
+Extracted it somewhere in my home folder (where I kept all the source files), sudo mv /usr/include/libxml2 /usr/include/libxml2-2.7.3 then symlink my extracted libxml2-2.7.8/include to /usr/include/libxml2&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Ruby on Rails &amp; Sybase</title>
@@ -492,30 +511,6 @@ net use x: &#92;{server}\d$  /USER:{server}\{username} {password}
     <updated>2008-06-27T01:07:00+10:00</updated>
     <id>http://shenie.github.com/blog/2008/06/27/apple-googles-open-web-efforts</id>
     <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.roughlydrafted.com/2008/06/14/cocoa-for-windows-flash-killer-sproutcore/&quot;&gt;Apple &amp;amp; Google&amp;#8217;s open web efforts&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;
-</content>
-  </entry>
-  
-  <entry>
-    <title>How to decompile everything</title>
-    <link href="http://shenie.github.com/blog/2008/06/13/how-to-decompile-everything/"/>
-    <updated>2008-06-13T07:30:00+10:00</updated>
-    <id>http://shenie.github.com/blog/2008/06/13/how-to-decompile-everything</id>
-    <content type="html">&lt;p&gt;Quick script to decompile all the class files.&lt;/p&gt;
-
-
-
-
-&lt;pre&gt;
-find . -name &quot;*.class&quot; -not -name &quot;*\$*&quot; | while read class
-do
-  dir=`dirname $class`
-  file=`basename $class .class`
-  pushd $dir &amp;gt;/dev/null
-  jad -p ${file}.class &amp;gt; ${file}.java
-  popd &amp;gt;/dev/null
-done
-&lt;/pre&gt;
-
 </content>
   </entry>
   

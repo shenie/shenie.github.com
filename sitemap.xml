@@ -623,11 +623,17 @@
         <lastmod>2012-03-21T22:15:26+11:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://shenie.github.com/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3/
+        </loc>
+        <lastmod>2012-07-26T22:06:45+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://shenie.github.com/blog/archives/</loc>
-        <lastmod>2012-03-21T22:15:26+11:00</lastmod>
+        <lastmod>2012-07-26T22:06:45+10:00</lastmod>
     </url>
     <url>
         <loc>http://shenie.github.com/</loc>
-        <lastmod>2012-03-21T22:15:26+11:00</lastmod>
+        <lastmod>2012-07-26T22:06:45+10:00</lastmod>
     </url>
 </urlset>

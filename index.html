@@ -9,7 +9,7 @@
   <meta name="author" content="Andy Shen">
 
   
-  <meta name="description" content="This was my notes many years ago of getting Ruby on Rails to run on Sybase.It is no doubt out-of-date by now. But still an interesting read for me,...">
+  <meta name="description" content="Upgraded to Mountain Lion and started getting the above warning when using nokogiri.It is happening because OSX has a default libxml2 in /usr/lib/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,6 +60,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3/">WARNING: Nokogiri Was Built Against LibXML Version 2.7.3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-07-26T22:04:00+10:00" pubdate  data-updated="true" >Jul 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Upgraded to Mountain Lion and started getting the above warning when using nokogiri.</p>
+
+<p>It is happening because OSX has a default libxml2 in /usr/lib/libxml2.2.dylib</p>
+
+<p>But the libxml2 headers used during nokogiri compilation are the ones in /usr/include/libxml2.
+nb.I don&#8217;t use macport or homebrew.</p>
+
+<p>So /usr/include/libxml2 is version 2.7.3 which you can see by looking inside libxml/xmlversion.h</p>
+
+<p>To get rid of the warning in nokogiri I needed to get matching headers for libxml2 2.7.8, so I downloaded ftp://xmlsoft.org/libxml2/libxml2-2.7.8.tar.gz
+Extracted it somewhere in my home folder (where I kept all the source files), sudo mv /usr/include/libxml2 /usr/include/libxml2-2.7.3 then symlink my extracted libxml2-2.7.8/include to /usr/include/libxml2</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -541,81 +585,6 @@ ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/11/23/imagemagick-and-jpeg-on-osx/">ImageMagick and JPEG on OSX</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-  
-
-
-
-<time datetime="2009-11-23T19:52:00+11:00" pubdate  data-updated="true" >Nov 23<span>rd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am not a fan of port or fink so I always install ImageMagick from source.</p>
-
-
-
-
-<div>Recently I came across a problem where ImageMagick fails to identify JPEG&#8217;s.</div>
-
-
-
-
-<div>The error looks something like this</div>
-
-
-
-
-<div>identify: no decode delegate for this image format</div>
-
-
-
-
-<div>After some digging around it appears I need to install libjpeg and reinstall ImageMagick for JPEG support.</div>
-
-
-
-
-<div>So I downloaded <a href="http://www.imagemagick.org/download/delegates/jpegsrc.v7.tar.gz">jpegsrc.v7.tar.gz</a> and just run thru the standard configure, make &amp; make install then reinstalled ImageMagick.</div>
-
-
-
-
-<div>After the installation you should be able to see JPEG as one of the supported format via the command &#8221;identify -list format&#8221;.</div>
-
-
-
-
-<div>It should contain something like this.</div>
-
-
-
-
-<div>     JPEG* JPEG      rw-   Joint Photographic Experts Group JFIF format (70)<p></p></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <nav class="pagination">
     <div>
       
@@ -633,6 +602,10 @@ ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/07/26/warning-nokogiri-was-built-against-libxml-version-2-dot-7-3/">WARNING: Nokogiri was built against LibXML version 2.7.3</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/21/ruby-on-rails-and-sybase/">Ruby on Rails &amp; Sybase</a>
       </li>
     
@@ -646,10 +619,6 @@ ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
     
       <li class="post">
         <a href="/blog/2011/06/09/grails-spring-ws-soap-http-requests-content-type/">Grails, spring-ws, SOAP & HTTP request&#8217;s content type</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/06/09/how-to-use-groovy-categories-in-gsps/">How to use Groovy categories in gsp&#8217;s</a>
       </li>
     
   </ul>
@@ -674,7 +643,7 @@ ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
 
 
 
-
+Included file &#8216;asides/googleplus.html&#8217; not found in _includes directory
   
 </aside>
 
@@ -692,14 +661,6 @@ ln -s /Applications/Sybase/System/OCS-12_5/lib/libsybcomn.dylib libsybcomn.dylib
   
 
   
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
 
   
   <script type="text/javascript">
